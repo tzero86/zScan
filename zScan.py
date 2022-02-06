@@ -5,6 +5,7 @@ import pyfiglet
 import requests
 from alive_progress import alive_bar
 
+# TODO: This needs to be consumed from a File and give the user the option to select the amount of subdomains to scan
 subdomains = ['www', 'mail', 'ftp', 'localhost', 'webmail', 'smtp', 'webdisk', 'pop', 'cpanel', 'whm', 'ns1', 'ns2',
               'autodiscover'
     , 'autoconfig', 'ns', 'test', 'm', 'blog', 'dev', 'www2', 'ns3', 'pop3', 'forum', 'admin', 'mail2', 'vpn', 'mx',
@@ -498,6 +499,7 @@ def scan_subdomains():
     print(f'[*] Starting to scan for valid subdomains for {domain}')
     total = len(subdomains)
     print(f'[!] A total of {total} subdomains will be scanned. Please be patient!\n')
+    # FIXME: THis multithreading breaks the progress bar from updating properly
     with alive_bar(total) as bar:
         for subdomain in subdomains:
             bar.text(f'Testing {subdomain}.{domain}')
@@ -542,7 +544,17 @@ def scan_subdomains_mt():
 
 # takes care of the start of the program and prints the banner
 def start():
-    banner = pyfiglet.figlet_format('zScan', font='univers')
+    # banner = pyfiglet.figlet_format('zScan', font='univers')
+    banner = '''
+                    ad88888ba
+                  d8"     "8b
+                  Y8,
+        888888888 `Y8aaaaa,    ,adPPYba, ,adPPYYba, 8b,dPPYba,   
+             a8P"   `"""""8b, a8"     "" ""     `Y8 88P'   `"8a  
+          ,d8P'           `8b 8b         ,adPPPPP88 88       88  
+        ,d8"      Y8a     a8P "8a,   ,aa 88,    ,88 88       88  
+        888888888  "Y88888P"   `"Ybbd8"' `"8bbdP"Y8 88       88 
+    '''
     print(banner)
     print('[*] zScan is a tool to scan for subdomains based on given domain.')
     scan_subdomains()
