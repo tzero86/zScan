@@ -1,6 +1,8 @@
 from contextlib import suppress
 import requests
-from alive_progress import alive_it, alive_bar
+import argparse
+from alive_progress import alive_bar
+import pyfiglet
 
 domain = 'youtube.com'
 subdomains = ['www', 'mail', 'ftp', 'localhost', 'webmail', 'smtp', 'webdisk', 'pop', 'cpanel', 'whm', 'ns1', 'ns2',
@@ -502,5 +504,12 @@ def scan_subdomains():
     print(f'\n[+] Scan Finished, Subdomains found: {subdomains_found}')
 
 
-if __name__ == '__main__':
+def start():
+    banner = pyfiglet.figlet_format('zScan', font='block')
+    print(banner)
+    print('[*] zScan is a tool to scan for subdomains based on given domain.')
     scan_subdomains()
+
+
+if __name__ == '__main__':
+    start()
