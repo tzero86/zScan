@@ -504,7 +504,7 @@ def scan_subdomains():
             # we suppress the exception requests.exceptions.ConnectionError
             with suppress(requests.exceptions.ConnectionError):
                 # we use the requests library to check if the subdomain is alive
-                if requests.get('http://' + subdomain + '.' + domain, timeout=5):
+                if requests.get('https://' + subdomain + '.' + domain, timeout=3):
                     # if the subdomain is alive, we add it to the list of subdomains found
                     subdomains_found.append(subdomain)
                     pass
@@ -517,6 +517,8 @@ def check_subdomain(subdomain):
     # we suppress the exception requests.exceptions.ConnectionError
     with suppress(requests.exceptions.ConnectionError):
         # we use the requests library to check if the subdomain is alive
+        # this has the limitation of the HTTP/HTTPS protocol that needs to be appended.
+        # TODO: Explore a DNS resolution alternative to check if the subdomain is alive
         if requests.get('http://' + subdomain + '.' + domain, timeout=5):
             # if the subdomain is alive, we add it to the list of subdomains found
             subdomains_found.append(subdomain)
@@ -529,7 +531,7 @@ def scan_subdomains_mt():
     total = len(subdomains)
     print(f'[!] A total of {total} subdomains will be scanned. Please be patient!\n')
     with alive_bar(total) as bar:
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=5) as executor:
             for subdomain in subdomains:
                 executor.submit(check_subdomain, subdomain)
                 bar.text(f'Testing {subdomain}.{domain}')
@@ -540,10 +542,10 @@ def scan_subdomains_mt():
 
 # takes care of the start of the program and prints the banner
 def start():
-    banner = pyfiglet.figlet_format('zScan', font='cosmike')
+    banner = pyfiglet.figlet_format('zScan', font='univers')
     print(banner)
     print('[*] zScan is a tool to scan for subdomains based on given domain.')
-    scan_subdomains_mt()
+    scan_subdomains()
 
 
 if __name__ == '__main__':
