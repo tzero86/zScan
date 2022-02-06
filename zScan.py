@@ -506,7 +506,7 @@ def scan_subdomains():
             # we suppress the exception requests.exceptions.ConnectionError
             with suppress(requests.exceptions.ConnectionError):
                 # we use the requests library to check if the subdomain is alive
-                if requests.get('https://' + subdomain + '.' + domain, timeout=3):
+                if requests.get('http://' + subdomain + '.' + domain, timeout=3):
                     # if the subdomain is alive, we add it to the list of subdomains found
                     subdomains_found.append(subdomain)
                     pass
