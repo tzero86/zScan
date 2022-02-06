@@ -32,7 +32,7 @@ def scan_subdomains():
         for subdomain in subdomains:
             bar.text(f'Testing {subdomain}.{domain}')
             # we suppress the exceptions that might occur
-            with suppress(resolver.NXDOMAIN, resolver.NoAnswer, resolver.Timeout):
+            with suppress(resolver.NXDOMAIN, resolver.NoAnswer, resolver.Timeout, resolver.NoNameservers):
                 # we use the dns.resolver library to check if the subdomain is alive
                 if resolver.resolve(f'{subdomain}.{domain}', 'A').response.answer:
                     # if the subdomain is alive, we add it to the list of subdomains found
