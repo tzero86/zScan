@@ -1,9 +1,9 @@
-from contextlib import suppress
-import requests
 import argparse
-from alive_progress import alive_bar
-import pyfiglet
+from contextlib import suppress
 
+import pyfiglet
+import requests
+from alive_progress import alive_bar
 
 subdomains = ['www', 'mail', 'ftp', 'localhost', 'webmail', 'smtp', 'webdisk', 'pop', 'cpanel', 'whm', 'ns1', 'ns2',
               'autodiscover'
@@ -493,6 +493,7 @@ args = parser.parse_args()
 domain = args.domain
 
 
+# here we take care of scanning each subdomain and checking if it's alive
 def scan_subdomains():
     print(f'[*] Starting to scan for valid subdomains for {domain}')
     total = len(subdomains)
@@ -500,16 +501,19 @@ def scan_subdomains():
     with alive_bar(total) as bar:
         for subdomain in subdomains:
             bar.text(f'Testing {subdomain}.{domain}')
+            # we suppress the exception requests.exceptions.ConnectionError
             with suppress(requests.exceptions.ConnectionError):
+                # we use the requests library to check if the subdomain is alive
                 if requests.get('http://' + subdomain + '.' + domain, timeout=5):
+                    # if the subdomain is alive, we add it to the list of subdomains found
                     subdomains_found.append(subdomain)
                     pass
-                else:
-                    pass
+            # we update the progress bar
             bar()
     print(f'\n[+] Scan Finished, Subdomains found: {subdomains_found}')
 
 
+# takes care of the start of the program and prints the banner
 def start():
     banner = pyfiglet.figlet_format('zScan', font='block')
     print(banner)
