@@ -4,7 +4,7 @@ import argparse
 from alive_progress import alive_bar
 import pyfiglet
 
-domain = 'youtube.com'
+
 subdomains = ['www', 'mail', 'ftp', 'localhost', 'webmail', 'smtp', 'webdisk', 'pop', 'cpanel', 'whm', 'ns1', 'ns2',
               'autodiscover'
     , 'autoconfig', 'ns', 'test', 'm', 'blog', 'dev', 'www2', 'ns3', 'pop3', 'forum', 'admin', 'mail2', 'vpn', 'mx',
@@ -486,9 +486,15 @@ subdomains = ['www', 'mail', 'ftp', 'localhost', 'webmail', 'smtp', 'webdisk', '
               'www.msk', 'pc2', 'schools']
 subdomains_found = []
 
+# We parse the required commandline arguments
+parser = argparse.ArgumentParser(description='Subdomain enumeration tool by Tzero86')
+parser.add_argument('-d', '--domain', help='Domain to enumerate', required=True)
+args = parser.parse_args()
+domain = args.domain
+
 
 def scan_subdomains():
-    print(f'\n[*] Starting to scan for valid subdomains for {domain}')
+    print(f'[*] Starting to scan for valid subdomains for {domain}')
     total = len(subdomains)
     print(f'[!] A total of {total} subdomains will be scanned. Please be patient!')
     with alive_bar(total) as bar:
