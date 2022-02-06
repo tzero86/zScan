@@ -1,6 +1,6 @@
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import suppress
-
 import pyfiglet
 import requests
 from alive_progress import alive_bar
@@ -497,7 +497,7 @@ domain = args.domain
 def scan_subdomains():
     print(f'[*] Starting to scan for valid subdomains for {domain}')
     total = len(subdomains)
-    print(f'[!] A total of {total} subdomains will be scanned. Please be patient!')
+    print(f'[!] A total of {total} subdomains will be scanned. Please be patient!\n')
     with alive_bar(total) as bar:
         for subdomain in subdomains:
             bar.text(f'Testing {subdomain}.{domain}')
@@ -513,12 +513,37 @@ def scan_subdomains():
     print(f'\n[+] Scan Finished, Subdomains found: {subdomains_found}')
 
 
+def check_subdomain(subdomain):
+    # we suppress the exception requests.exceptions.ConnectionError
+    with suppress(requests.exceptions.ConnectionError):
+        # we use the requests library to check if the subdomain is alive
+        if requests.get('http://' + subdomain + '.' + domain, timeout=5):
+            # if the subdomain is alive, we add it to the list of subdomains found
+            subdomains_found.append(subdomain)
+            pass
+
+
+# multithreading subdomain scanner
+def scan_subdomains_mt():
+    print(f'[*] Starting to scan for valid subdomains for {domain}')
+    total = len(subdomains)
+    print(f'[!] A total of {total} subdomains will be scanned. Please be patient!\n')
+    with alive_bar(total) as bar:
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            for subdomain in subdomains:
+                executor.submit(check_subdomain, subdomain)
+                bar.text(f'Testing {subdomain}.{domain}')
+                # we update the progress bar
+                bar()
+    print(f'\n[+] Scan Finished, Subdomains found: {subdomains_found}')
+
+
 # takes care of the start of the program and prints the banner
 def start():
-    banner = pyfiglet.figlet_format('zScan', font='block')
+    banner = pyfiglet.figlet_format('zScan', font='cosmike')
     print(banner)
     print('[*] zScan is a tool to scan for subdomains based on given domain.')
-    scan_subdomains()
+    scan_subdomains_mt()
 
 
 if __name__ == '__main__':
