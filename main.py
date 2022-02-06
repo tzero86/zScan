@@ -484,16 +484,23 @@ subdomains = ['www', 'mail', 'ftp', 'localhost', 'webmail', 'smtp', 'webdisk', '
               'www.msk', 'pc2', 'schools']
 subdomains_found = []
 
-print(f'\n[*] Starting to scan for valid subdomains for {domain}')
-total = len(subdomains)
-with alive_bar(total) as bar:
-    for subdomain in subdomains:
-        bar.text(f'Testing {subdomain}.{domain}')
-        with suppress(requests.exceptions.ConnectionError):
-            if requests.get('http://' + subdomain + '.' + domain, timeout=5):
-                subdomains_found.append(subdomain)
-                pass
-            else:
-                pass
-        bar()
-print(f'\n[+] Scan Finished, Subdomains found: {subdomains_found}')
+
+def scan_subdomains():
+    print(f'\n[*] Starting to scan for valid subdomains for {domain}')
+    total = len(subdomains)
+    print(f'[!] A total of {total} subdomains will be scanned. Please be patient!')
+    with alive_bar(total) as bar:
+        for subdomain in subdomains:
+            bar.text(f'Testing {subdomain}.{domain}')
+            with suppress(requests.exceptions.ConnectionError):
+                if requests.get('http://' + subdomain + '.' + domain, timeout=5):
+                    subdomains_found.append(subdomain)
+                    pass
+                else:
+                    pass
+            bar()
+    print(f'\n[+] Scan Finished, Subdomains found: {subdomains_found}')
+
+
+if __name__ == '__main__':
+    scan_subdomains()
