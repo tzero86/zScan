@@ -1,7 +1,6 @@
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import suppress
-import pyfiglet
 import requests
 from alive_progress import alive_bar
 
@@ -498,7 +497,8 @@ domain = args.domain
 def scan_subdomains():
     print(f'[*] Starting to scan for valid subdomains for {domain}')
     total = len(subdomains)
-    print(f'[!] A total of {total} subdomains will be scanned. Please be patient!\n')
+    print(f'[!] A total of {total} subdomains will be scanned. Please be patient!')
+    print(f'[*] Scan is in progress...')
     # FIXME: THis multithreading breaks the progress bar from updating properly
     with alive_bar(total) as bar:
         for subdomain in subdomains:
@@ -531,7 +531,7 @@ def check_subdomain(subdomain):
 def scan_subdomains_mt():
     print(f'[*] Starting to scan for valid subdomains for {domain}')
     total = len(subdomains)
-    print(f'[!] A total of {total} subdomains will be scanned. Please be patient!\n')
+    print(f'[!] A total of {total} subdomains will be scanned. Please be patient!')
     with alive_bar(total) as bar:
         with ThreadPoolExecutor(max_workers=5) as executor:
             for subdomain in subdomains:
