@@ -30,9 +30,9 @@ def scan_subdomains():
     total = len(subdomains)
     print(f'[!] A total of {total} subdomains will be scanned. Please be patient!')
     print(f'[!] You can press CRTL+C at any time to terminate the scan and save the results.')
-    print(f'[*] Scan is in progress...')
     with alive_bar(total) as bar:
         for subdomain in subdomains:
+            bar.title = f'[*] Scan progress: {domain}'
             bar.text(f'Testing {subdomain}.{domain}')
             # we suppress the exceptions that might occur
             with suppress(resolver.NXDOMAIN, resolver.NoAnswer, resolver.Timeout, resolver.NoNameservers):
