@@ -30,7 +30,7 @@ def scan_subdomains():
     total = len(subdomains)
     print(f'[!] A total of {total} subdomains will be scanned. Please be patient!')
     print(f'[!] You can press CRTL+C at any time to terminate the scan and save the results.')
-    with alive_bar(total) as bar:
+    with alive_bar(total, spinner='triangles', length=20, theme='smooth') as bar:
         for subdomain in subdomains:
             bar.title = f'[*] Scan progress: {domain}'
             bar.text(f'Testing {subdomain}.{domain}')
