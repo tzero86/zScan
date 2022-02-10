@@ -16,14 +16,9 @@ AMMmmmM P"Ybmmd"   YMbmd'  `Moo9^Yo..JMML  JMML.
 [*] Starting to scan for valid subdomains for google.com
 [!] A total of 4989 subdomains will be scanned. Please be patient!
 [!] You can press CRTL+C at any time to terminate the scan and save the results.
-on 211: 
-on 211: [!] Terminate request received, saving scan results and exiting...
-on 211: [*] Subdomains saved to google.com_subdomains.txt
-[*] Scan progress: google.com |█▊                                      | ▂▄▆ 211/4989 [4%] in 17s (12.3/s, eta: 6:27) Testing a.google.com
-Process finished with exit code 0
+[*] Scanning: google.com |▉         | ⡀ 406/4989 [8%] in 13s (30.1/s, eta: 2:31) Testing autodiscover.forum.google.com
 
 ````
-
 
 
 ## Install
