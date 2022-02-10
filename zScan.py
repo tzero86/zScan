@@ -2,6 +2,8 @@ import argparse
 from contextlib import suppress
 from alive_progress import alive_bar
 from dns import resolver
+import signal
+import sys
 
 # Global variables
 subdomains_found = []
@@ -27,6 +29,7 @@ def scan_subdomains():
     print(f'[*] Starting to scan for valid subdomains for {domain}')
     total = len(subdomains)
     print(f'[!] A total of {total} subdomains will be scanned. Please be patient!')
+    print(f'[!] You can press CRTL+C at any time to terminate the scan and save the results.')
     print(f'[*] Scan is in progress...')
     with alive_bar(total) as bar:
         for subdomain in subdomains:
@@ -40,6 +43,23 @@ def scan_subdomains():
             # we update the progress bar
             bar()
     print(f'\n[+] Scan Finished, Subdomains found: {subdomains_found}')
+    save_subdomains()
+
+
+# we save the subdomains found to a file
+def save_subdomains():
+    with open(f'./results/{domain}_subdomains.txt', 'w') as f:
+        for subdomain in subdomains_found:
+            f.write(f'{subdomain}\n')
+    print(f'[*] Subdomains saved to {domain}_subdomains.txt')
+
+
+# we handle the signals that might occur
+def signal_handler(sig, frame):
+    print('\n\n')
+    print('[!] Terminate request received, saving scan results and exiting...')
+    save_subdomains()
+    sys.exit(0)
 
 
 # takes care of the start of the program and prints the banner
@@ -55,6 +75,7 @@ AMMmmmM P"Ybmmd"   YMbmd'  `Moo9^Yo..JMML  JMML.
     '''
     print(banner)
     print('[*] zScan is a tool to scan for subdomains based on given domain, inspired by Joe Helle\'s python3 series.')
+    signal.signal(signal.SIGINT, signal_handler)
     scan_subdomains()
 
 

@@ -1,0 +1,12 @@
+www
+mail
+m
+blog
+dev
+www2
+mx
+mobile
+support
+static
+api
+media
