@@ -3,21 +3,19 @@
 The other day I was catching up to Joe Helle's Python 3 tools series on YouTube and got inspired to give the subdomain scanner a try. I'm not a coder so the code could be ugly, any feedback is welcome!
 
 ````text
+    ███████╗███████╗ ██████╗ █████╗ ███╗   ██╗
+    ╚══███╔╝██╔════╝██╔════╝██╔══██╗████╗  ██║
+      ███╔╝ ███████╗██║     ███████║██╔██╗ ██║
+     ███╔╝  ╚════██║██║     ██╔══██║██║╚██╗██║
+    ███████╗███████║╚██████╗██║  ██║██║ ╚████║
+    ╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝
+   ─▌ A subdomain enumeration tool by Tzero86 ▐─
 
-         .M"""bgd
-        ,MI    "Y
-M"""MMV `MMb.      ,p6"bo   ,6"Yb.  `7MMpMMMb.  
-'  AMV    `YMMNq. 6M'  OO  8)   MM    MM    MM  
-  AMV   .     `MM 8M        ,pm9MM    MM    MM  
- AMV  , Mb     dM YM.    , 8M   MM    MM    MM  
-AMMmmmM P"Ybmmd"   YMbmd'  `Moo9^Yo..JMML  JMML.
-    
-[*] zScan is a tool to scan for subdomains based on given domain, inspired by Joe Helle's python3 series.
-[*] Starting to scan for valid subdomains for google.com
+[*] Loading zScan a quick subdomain scanner, inspired by Joe Helle's python3 series.
+[*] Starting to scan for valid subdomains for facebook.com
 [!] A total of 4989 subdomains will be scanned. Please be patient!
 [!] You can press CRTL+C at any time to terminate the scan and save the results.
-[*] Scanning: google.com |▉         | ⡀ 406/4989 [8%] in 13s (30.1/s, eta: 2:31) Testing autodiscover.forum.google.com
-
+[*] Scanning: facebook.com |▍         | ⡀ 173/4989 [3%] in 9s (18.3/s, eta: 3:26) Testing autodiscover.blog.
 ````
 
 
@@ -27,8 +25,26 @@ AMMmmmM P"Ybmmd"   YMbmd'  `Moo9^Yo..JMML  JMML.
 
 ## usage
 
-    python zscan.py -d google.com
+    python zscan.py -sd google.com
 
+## See Help & options
+
+    python zscan.py -h
+
+```
+zScan is a Subdomain enumeration tool made by Tzero86
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -sd DOMAIN, --domain DOMAIN
+                        Single Domain to enumerate
+  -dl DOMLIST, --domlist DOMLIST
+                        Custom domain file to use
+  -sl SUBLIST, --sublist SUBLIST
+                        Custom subdomains file to use
+  -o OUTPUT, --output OUTPUT
+                        Output file
+```
 
 ## Features
 
@@ -36,6 +52,12 @@ AMMmmmM P"Ybmmd"   YMbmd'  `Moo9^Yo..JMML  JMML.
 - Save results to a file
 - Scan progress bar
 - Terminate Scan by pressing CRTL+C
+
+## Currently working on
+
+- Support for custom domain and subdomain files
+- Support to specify output file to save the results to
+
 
 ## Things to fix or add
 

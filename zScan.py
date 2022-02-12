@@ -9,15 +9,29 @@ import sys
 subdomains_found = []
 
 # We parse the required commandline arguments
-parser = argparse.ArgumentParser(description='Subdomain enumeration tool by Tzero86')
-parser.add_argument('-d', '--domain', help='Domain to enumerate', required=True)
+parser = argparse.ArgumentParser(description='zScan is a Subdomain enumeration tool made by Tzero86')
+parser.add_argument('-sd', '--domain', help='Single Domain to enumerate', required=True)
+parser.add_argument('-dl', '--domlist', help='Custom domain file to use', required=False)
+parser.add_argument('-sl', '--sublist', help='Custom subdomains file to use', required=False)
+parser.add_argument('-o', '--output', help='Output file', required=False)
 args = parser.parse_args()
 domain = args.domain
+custom_sublist = args.sublist
+custom_domlist = args.domlist
+output_file = args.output
 
 
 # we load the domains file and return a list with all the subdomains
 def load_subdoms():
     with open('./lists/subdomains-top1million-110000.txt', 'r') as f:
+        filecontents = f.read()
+        subdoms = filecontents.splitlines()
+    return subdoms
+
+
+# we ask the user for a custom subdomains file to load
+def load_subdoms_file():
+    with open(input('[*] Enter the path to the file containing the subdomains: '), 'r') as f:
         filecontents = f.read()
         subdoms = filecontents.splitlines()
     return subdoms
@@ -65,16 +79,17 @@ def signal_handler(sig, frame):
 # takes care of the start of the program and prints the banner
 def start():
     banner = '''
-         .M"""bgd                               
-        ,MI    "Y                               
-M"""MMV `MMb.      ,p6"bo   ,6"Yb.  `7MMpMMMb.  
-'  AMV    `YMMNq. 6M'  OO  8)   MM    MM    MM  
-  AMV   .     `MM 8M        ,pm9MM    MM    MM  
- AMV  , Mb     dM YM.    , 8M   MM    MM    MM  
-AMMmmmM P"Ybmmd"   YMbmd'  `Moo9^Yo..JMML  JMML.
+    
+    ███████╗███████╗ ██████╗ █████╗ ███╗   ██╗
+    ╚══███╔╝██╔════╝██╔════╝██╔══██╗████╗  ██║
+      ███╔╝ ███████╗██║     ███████║██╔██╗ ██║
+     ███╔╝  ╚════██║██║     ██╔══██║██║╚██╗██║
+    ███████╗███████║╚██████╗██║  ██║██║ ╚████║
+    ╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝
+   ─▌ A subdomain enumeration tool by Tzero86 ▐─
     '''
     print(banner)
-    print('[*] zScan is a tool to scan for subdomains based on given domain, inspired by Joe Helle\'s python3 series.')
+    print('[*] Loading zScan a quick subdomain scanner, inspired by Joe Helle\'s python3 series.')
     signal.signal(signal.SIGINT, signal_handler)
     scan_subdomains()
 
