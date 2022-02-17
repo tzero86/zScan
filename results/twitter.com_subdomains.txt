@@ -1,12 +1,39 @@
-www
-mail
-m
-blog
-dev
-www2
-mx
-mobile
-support
-static
-api
-media
+{
+    "zScan": {
+        "domain_scanned": "twitter.com",
+        "total_subdomains_found": "29",
+        "scan_start_date": "2022-02-16 23:04:15.151180",
+        "scan_end_date": "2022-02-16 23:04:25.860599",
+        "subdomains_found": [
+            "www",
+            "mail",
+            "m",
+            "blog",
+            "dev",
+            "www2",
+            "mx",
+            "mobile",
+            "support",
+            "static",
+            "api",
+            "media",
+            "video",
+            "mx1",
+            "search",
+            "mx2",
+            "ads",
+            "download",
+            "apps",
+            "live",
+            "sms",
+            "upload",
+            "help",
+            "www4",
+            "s",
+            "data",
+            "facebook",
+            "jobs",
+            "stream"
+        ]
+    }
+}

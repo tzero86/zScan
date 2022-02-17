@@ -1,5 +1,7 @@
 import argparse
+import json
 from contextlib import suppress
+from datetime import datetime
 from alive_progress import alive_bar
 from dns import resolver
 import signal
@@ -7,6 +9,7 @@ import sys
 
 # Global variables
 subdomains_found = []
+scan_StartTime = datetime.now()
 
 # We parse the required commandline arguments
 parser = argparse.ArgumentParser(description='zScan is a Subdomain enumeration tool made by Tzero86')
@@ -62,9 +65,18 @@ def scan_subdomains():
 
 # we save the subdomains found to a file
 def save_subdomains():
+    # Output json template
+    output_json = {
+        "zScan": {
+            "domain_scanned": f'{domain}',
+            "total_subdomains_found": f'{len(subdomains_found)}',
+            "scan_start_date": f'{scan_StartTime}',
+            "scan_end_date": f'{datetime.now()}',
+            "subdomains_found": subdomains_found
+        }
+    }
     with open(f'./results/{domain}_subdomains.txt', 'w') as f:
-        for subdomain in subdomains_found:
-            f.write(f'{subdomain}\n')
+        f.write(f'{json.dumps(output_json, indent=4)}')
     print(f'[*] Subdomains saved to {domain}_subdomains.txt')
 
 
