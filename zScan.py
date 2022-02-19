@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 from contextlib import suppress
 from datetime import datetime
 from alive_progress import alive_bar
@@ -22,6 +23,13 @@ domain = args.domain
 custom_sublist = args.sublist
 custom_domlist = args.domlist
 output_file = args.output
+
+# a function to clear the terminal screen
+def clear_screen():
+    if sys.platform == 'win32':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 
 # we load the domains file and return a list with all the subdomains
@@ -100,6 +108,7 @@ def start():
     ╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝
    ─▌ A subdomain enumeration tool by Tzero86 ▐─
     '''
+    clear_screen()
     print(banner)
     print('[*] Loading zScan a quick subdomain scanner, inspired by Joe Helle\'s python3 series.')
     signal.signal(signal.SIGINT, signal_handler)
