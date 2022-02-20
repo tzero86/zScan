@@ -24,6 +24,7 @@ custom_sublist = args.sublist
 custom_domlist = args.domlist
 output_file = args.output
 
+
 # a function to clear the terminal screen
 def clear_screen():
     if sys.platform == 'win32':
@@ -34,18 +35,17 @@ def clear_screen():
 
 # we load the domains file and return a list with all the subdomains
 def load_subdoms():
-    with open('./lists/subdomains-top1million-110000.txt', 'r') as f:
-        filecontents = f.read()
-        subdoms = filecontents.splitlines()
-    return subdoms
-
-
-# we ask the user for a custom subdomains file to load
-def load_subdoms_file():
-    with open(input('[*] Enter the path to the file containing the subdomains: '), 'r') as f:
-        filecontents = f.read()
-        subdoms = filecontents.splitlines()
-    return subdoms
+    if custom_sublist:
+        # if the user provided a custom subdomains file, we load that file and return a list with all the subdomains
+        with open(custom_sublist, 'r') as f:
+            subdomains = f.read().splitlines()
+        return subdomains
+    else:
+        # if the user does not provides a custom list, we use the seclists.org subdomain list
+        with open('./lists/subdomains-top1million-110000.txt', 'r') as f:
+            filecontents = f.read()
+            subdoms = filecontents.splitlines()
+        return subdoms
 
 
 # here we take care of scanning each subdomain and checking if it's alive
