@@ -52,11 +52,11 @@ optional arguments:
 - Save results to a file
 - Scan progress bar
 - Terminate Scan by pressing CRTL+C
+- Support to specify output file to save the results to
 
 ## Currently working on
 
 - Support for custom domain and subdomain files
-- Support to specify output file to save the results to
 
 
 ## Things to fix or add

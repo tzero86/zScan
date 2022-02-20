@@ -83,9 +83,16 @@ def save_subdomains():
             "subdomains_found": subdomains_found
         }
     }
-    with open(f'./results/{domain}_subdomains.txt', 'w') as f:
-        f.write(f'{json.dumps(output_json, indent=4)}')
-    print(f'[*] Subdomains saved to {domain}_subdomains.txt')
+    if output_file:
+        # if the user provided an output file, we save the results to that file
+        with open(output_file, 'w') as f:
+            json.dump(output_json, f, indent=4)
+        print(f'[+] Results saved to {output_file}')
+    else:
+        # if the user did not provide an output file, we save the results to a default file
+        with open(f'./results/{domain}_zScan_results.json', 'w') as f:
+            json.dump(output_json, f, indent=4)
+        print(f'[+] Results saved to ./results/{domain}_zScan_results.json')
 
 
 # we handle the signals that might occur
