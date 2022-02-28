@@ -7,6 +7,7 @@ from alive_progress import alive_bar
 from dns import resolver
 import signal
 import sys
+from rich import print, print_json
 
 # Global variables
 subdomains_found = []
@@ -51,11 +52,11 @@ def load_subdoms():
 # here we take care of scanning each subdomain and checking if it's alive
 def scan_subdomains():
     subdomains = load_subdoms()
-    print(f'[*] Starting to scan for valid subdomains for {domain}')
+    print(f'[*] Starting to scan [cyan]{domain}[/] for valid subdomains... ')
     total = len(subdomains)
-    print(f'[!] A total of {total} subdomains will be scanned. Please be patient!')
-    print(f'[!] You can press CRTL+C at any time to terminate the scan and save the results.')
-    with alive_bar(total, spinner='dots', length=10, theme='smooth') as bar:
+    print(f'[!] A total of [cyan]{total}[/] subdomains will be scanned. [bold]Please be patient![/]')
+    print(f'[!] You can press [bold][cyan]CRTL+C[/][/] at any time to terminate the scan and save the results.')
+    with alive_bar(total, spinner='dots', length=12, theme='smooth') as bar:
         for subdomain in subdomains:
             bar.title = f'[*] Scanning: {domain}'
             bar.text(f'Testing {subdomain}.{domain}')
@@ -67,7 +68,6 @@ def scan_subdomains():
                     subdomains_found.append(subdomain)
             # we update the progress bar
             bar()
-    print(f'\n[+] Scan Finished, Subdomains found: {subdomains_found}')
     save_subdomains()
 
 
@@ -87,25 +87,29 @@ def save_subdomains():
         # if the user provided an output file, we save the results to that file
         with open(output_file, 'w') as f:
             json.dump(output_json, f, indent=4)
-        print(f'[+] Results saved to {output_file}')
+        print(f'[+] Scan Finished, showing results: ')
+        print_json(json.dumps(output_json, indent=4))
+        print(f'[+] Results saved to: [purple]{output_file}[/]')
     else:
         # if the user did not provide an output file, we save the results to a default file
         with open(f'./results/{domain}_zScan_results.json', 'w') as f:
             json.dump(output_json, f, indent=4)
-        print(f'[+] Results saved to ./results/{domain}_zScan_results.json')
+        print(f'[+] Scan Finished, showing results: ')
+        print_json(json.dumps(output_json, indent=4))
+        print(f'[+] Results saved to: [purple]./results/{domain}_zScan_results.json[/]')
 
 
 # we handle the signals that might occur
 def signal_handler(sig, frame):
     print('\n\n')
-    print('[!] Terminate request received, saving scan results and exiting...')
+    print('[red][!] Terminate request received, saving scan results and exiting...[/]')
     save_subdomains()
     sys.exit(0)
 
 
 # takes care of the start of the program and prints the banner
 def start():
-    banner = '''
+    banner = '''[green]
     
     ███████╗███████╗ ██████╗ █████╗ ███╗   ██╗
     ╚══███╔╝██╔════╝██╔════╝██╔══██╗████╗  ██║
@@ -113,11 +117,11 @@ def start():
      ███╔╝  ╚════██║██║     ██╔══██║██║╚██╗██║
     ███████╗███████║╚██████╗██║  ██║██║ ╚████║
     ╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝
-   ─▌ A subdomain enumeration tool by Tzero86 ▐─
+   ─▌ A subdomain enumeration tool by [purple]Tzero86[/] ▐─[/]
     '''
     clear_screen()
     print(banner)
-    print('[*] Loading zScan a quick subdomain scanner, inspired by Joe Helle\'s python3 series.')
+    print('[*] Loading [bold][purple]zScan[/][/] a quick subdomain scanner, inspired by Joe Helle\'s python3 series.')
     signal.signal(signal.SIGINT, signal_handler)
     scan_subdomains()
 

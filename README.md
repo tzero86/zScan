@@ -2,7 +2,8 @@
 
 The other day I was catching up to Joe Helle's Python 3 tools series on YouTube and got inspired to give the subdomain scanner a try. I'm not a coder so the code could be ugly, any feedback is welcome!
 
-````text
+````json
+
     ███████╗███████╗ ██████╗ █████╗ ███╗   ██╗
     ╚══███╔╝██╔════╝██╔════╝██╔══██╗████╗  ██║
       ███╔╝ ███████╗██║     ███████║██╔██╗ ██║
@@ -12,10 +13,31 @@ The other day I was catching up to Joe Helle's Python 3 tools series on YouTube 
    ─▌ A subdomain enumeration tool by Tzero86 ▐─
 
 [*] Loading zScan a quick subdomain scanner, inspired by Joe Helle's python3 series.
-[*] Starting to scan for valid subdomains for facebook.com
-[!] A total of 4989 subdomains will be scanned. Please be patient!
+[*] Starting to scan netflix.com for valid subdomains...
+[!] A total of 45 subdomains will be scanned. Please be patient!
 [!] You can press CRTL+C at any time to terminate the scan and save the results.
-[*] Scanning: facebook.com |▍         | ⡀ 173/4989 [3%] in 9s (18.3/s, eta: 3:26) Testing autodiscover.blog.
+[*] Scanning: netflix.com |████████████| 45/45 [100%] in 5.0s (9.05/s)
+[+] Scan Finished, showing results:
+{
+  "zScan": {
+    "domain_scanned": "netflix.com",
+    "total_subdomains_found": "9",
+    "scan_start_date": "2022-02-28 17:32:14.729128",
+    "scan_end_date": "2022-02-28 17:32:19.781099",
+    "subdomains_found": [
+      "www",
+      "mail",
+      "blog",
+      "www2",
+      "vpn",
+      "secure",
+      "shop",
+      "static",
+      "www1"
+    ]
+  }
+}
+[+] Results saved to: ./results/netflix.com_zScan_results.json
 ````
 
 
