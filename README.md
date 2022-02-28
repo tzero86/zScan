@@ -2,7 +2,7 @@
 
 The other day I was catching up to Joe Helle's Python 3 tools series on YouTube and got inspired to give the subdomain scanner a try. I'm not a coder so the code could be ugly, any feedback is welcome!
 
-````json
+````text
 
     ███████╗███████╗ ██████╗ █████╗ ███╗   ██╗
     ╚══███╔╝██╔════╝██╔════╝██╔══██╗████╗  ██║
