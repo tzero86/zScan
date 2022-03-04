@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
 import argparse
 import json
 import os
+import textwrap
 from contextlib import suppress
 from datetime import datetime
 from alive_progress import alive_bar
@@ -14,7 +16,16 @@ subdomains_found = []
 scan_StartTime = datetime.now()
 
 # We parse the required commandline arguments
-parser = argparse.ArgumentParser(description='zScan is a Subdomain enumeration tool made by Tzero86')
+parser = argparse.ArgumentParser(description='''
+   ─▌  zScan is a Quick Subdomain Scanner created by Tzero86  ▐─
+''',
+                                 formatter_class=argparse.RawDescriptionHelpFormatter,
+                                 epilog=textwrap.dedent('''Scan Examples: 
+ zScan.py -sd google.com
+ zScan.py -sd domain.com  -o output.json
+ zScan.py -sd domain.com -sl custom_subdoms.txt
+ zScan.py -sd domain.com -sl custom_subdoms.txt -o results/test.json
+ '''))
 parser.add_argument('-sd', '--domain', help='Single Domain to enumerate', required=True)
 parser.add_argument('-dl', '--domlist', help='Custom domain file to use', required=False)
 parser.add_argument('-sl', '--sublist', help='Custom subdomains file to use', required=False)
@@ -117,7 +128,7 @@ def start():
      ███╔╝  ╚════██║██║     ██╔══██║██║╚██╗██║
     ███████╗███████║╚██████╗██║  ██║██║ ╚████║
     ╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝
-   ─▌ A subdomain enumeration tool by [purple]Tzero86[/] ▐─[/]
+    ─▌ A Quick Subdomain scanner by [purple]Tzero86[/] ▐─[/]
     '''
     clear_screen()
     print(banner)
